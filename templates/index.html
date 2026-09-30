@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Loan Eligibility Checker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            display: flex;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 30px 40px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+
+        h1 {
+            font-size: 22px;
+            margin-bottom: 20px;
+            color: #222;
+        }
+
+        label {
+            display: block;
+            margin-top: 14px;
+            margin-bottom: 4px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #444;
+        }
+
+        select,
+        input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+
+        button {
+            margin-top: 22px;
+            width: 100%;
+            padding: 12px;
+            background-color: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #1d4ed8;
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 6px;
+            font-size: 16px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .approved {
+            background-color: #dcfce7;
+            color: #166534;
+        }
+
+        .rejected {
+            background-color: #fee2e2;
+            color: #991b1b;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card">
+        <h1>Loan Eligibility Checker</h1>
+        <form method="post" action="/predict-form">
+            <label>Gender</label>
+            <select name="Gender">
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+            </select>
+
+            <label>Married</label>
+            <select name="Married">
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+
+            <label>Dependents</label>
+            <select name="Dependents">
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3+">3+</option>
+            </select>
+
+            <label>Education</label>
+            <select name="Education">
+                <option value="Graduate">Graduate</option>
+                <option value="Not Graduate">Not Graduate</option>
+            </select>
+
+            <label>Self Employed</label>
+            <select name="Self_Employed">
+                <option value="No">No</option>
+                <option value="Yes">Yes</option>
+            </select>
+
+            <label>Applicant Income (monthly)</label>
+            <input type="number" step="any" name="ApplicantIncome" required value="5849">
+
+            <label>Coapplicant Income (monthly)</label>
+            <input type="number" step="any" name="CoapplicantIncome" required value="0">
+
+            <label>Loan Amount (in thousands)</label>
+            <input type="number" step="any" name="LoanAmount" required value="128">
+
+            <label>Loan Amount Term (days)</label>
+            <input type="number" step="any" name="Loan_Amount_Term" required value="360">
+
+            <label>Credit History</label>
+            <select name="Credit_History">
+                <option value="1">Good (1)</option>
+                <option value="0">Bad (0)</option>
+            </select>
+
+            <label>Property Area</label>
+            <select name="Property_Area">
+                <option value="Urban">Urban</option>
+                <option value="Semiurban">Semiurban</option>
+                <option value="Rural">Rural</option>
+            </select>
+
+            <button type="submit">Check Eligibility</button>
+        </form>
+
+        {% if result %}
+        <div class="result {{ 'approved' if result == 'Approved' else 'rejected' }}">
+            Loan {{ result }} — Confidence: {{ probability }}%
+        </div>
+        {% endif %}
+
+        {% if error %}
+        <div class="result rejected">
+            {{ error }}
+        </div>
+        {% endif %}
+    </div>
+</body>
+
+</html>
