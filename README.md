@@ -1,7 +1,7 @@
 ## Loan Eligibility Prediction System
 
 ## Author: Ekeoma Onuoha
-## GitHub: github.com/AirchildDev/
+## GitHub: github.com/AirchildDev/LoanPrediction_Project
 
 --------------------------------------------------------------------------------
 
